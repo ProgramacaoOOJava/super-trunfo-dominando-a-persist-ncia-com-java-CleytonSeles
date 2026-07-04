@@ -1,18 +1,32 @@
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+
 /**
- * Representa um aluno como uma carta do Super Trunfo.
+ * Entidade que representa um aluno e sua carta no baralho.
  */
+@Entity
+@Table(name = "aluno")
 public class Aluno {
+
+    @Id
+    @Column(name = "matricula", nullable = false, length = 20)
     private String matricula;
+
+    @Column(name = "nome", nullable = false, length = 100)
     private String nome;
-    private int entrada;
+
+    @Column(name = "ano", nullable = false)
+    private int ano;
 
     public Aluno() {
     }
 
-    public Aluno(String matricula, String nome, int entrada) {
+    public Aluno(String matricula, String nome, int ano) {
         this.matricula = matricula;
         this.nome = nome;
-        this.entrada = entrada;
+        this.ano = ano;
     }
 
     public String getMatricula() {
@@ -31,24 +45,32 @@ public class Aluno {
         this.nome = nome;
     }
 
+    public int getAno() {
+        return ano;
+    }
+
+    public void setAno(int ano) {
+        this.ano = ano;
+    }
+
+    /**
+     * Compatibilidade com a etapa anterior do desafio.
+     */
     public int getEntrada() {
-        return entrada;
+        return ano;
     }
 
+    /**
+     * Compatibilidade com a etapa anterior do desafio.
+     */
     public void setEntrada(int entrada) {
-        this.entrada = entrada;
+        this.ano = entrada;
     }
 
-    /**
-     * No desafio, a força da carta é o próprio ano de entrada.
-     */
     public int getForca() {
-        return entrada;
+        return ano;
     }
 
-    /**
-     * A-M = Comum, N-Z = Rara.
-     */
     public String getRaridade() {
         if (matricula == null || matricula.isBlank()) {
             return "Desconhecida";
@@ -61,25 +83,20 @@ public class Aluno {
         return "Rara";
     }
 
-    /**
-     * Exibe a carta formatada no console.
-     */
     public void exibirCarta() {
         System.out.println("+--------------------------------------+");
         System.out.printf("| %-36s |%n", "CARTA DE ALUNO");
         System.out.println("+--------------------------------------+");
         System.out.printf("| Nome: %-30s |%n", nome);
         System.out.printf("| Matricula: %-25s |%n", matricula);
+        System.out.printf("| Ano: %-31d |%n", ano);
         System.out.printf("| Forca: %-29d |%n", getForca());
         System.out.printf("| Raridade: %-25s |%n", getRaridade());
         System.out.println("+--------------------------------------+");
     }
 
-    /**
-     * Vence quem tiver o ano de entrada mais recente.
-     */
     public boolean batalhar(Aluno oponente) {
-        return this.entrada > oponente.entrada;
+        return this.ano > oponente.ano;
     }
 
     @Override
@@ -87,7 +104,7 @@ public class Aluno {
         return "Aluno{"
             + "matricula='" + matricula + '\''
             + ", nome='" + nome + '\''
-            + ", entrada=" + entrada
+            + ", ano=" + ano
             + ", raridade='" + getRaridade() + '\''
             + '}';
     }

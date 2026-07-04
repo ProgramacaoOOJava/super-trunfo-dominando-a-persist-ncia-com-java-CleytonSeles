@@ -35,7 +35,7 @@ public class SuperTrunfoJDBC {
         String sql = "CREATE TABLE aluno ("
             + "matricula VARCHAR(20) PRIMARY KEY, "
             + "nome VARCHAR(100) NOT NULL, "
-            + "entrada INT NOT NULL"
+            + "ano INT NOT NULL"
             + ")";
 
         try (Connection conn = getConnection();
@@ -57,14 +57,14 @@ public class SuperTrunfoJDBC {
      * Insere um novo aluno usando PreparedStatement.
      */
     public static boolean inserirAluno(Aluno aluno) {
-        String sql = "INSERT INTO aluno (matricula, nome, entrada) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO aluno (matricula, nome, ano) VALUES (?, ?, ?)";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
 
             ps.setString(1, aluno.getMatricula());
             ps.setString(2, aluno.getNome());
-            ps.setInt(3, aluno.getEntrada());
+            ps.setInt(3, aluno.getAno());
 
             int linhasAfetadas = ps.executeUpdate();
             if (linhasAfetadas > 0) {
@@ -84,7 +84,7 @@ public class SuperTrunfoJDBC {
      */
     public static List<Aluno> consultarTodosAlunos() {
         List<Aluno> alunos = new ArrayList<>();
-        String sql = "SELECT matricula, nome, entrada FROM aluno ORDER BY nome";
+        String sql = "SELECT matricula, nome, ano FROM aluno ORDER BY nome";
 
         try (Connection conn = getConnection();
              Statement stmt = conn.createStatement();
@@ -94,7 +94,7 @@ public class SuperTrunfoJDBC {
                 Aluno aluno = new Aluno();
                 aluno.setMatricula(rs.getString("matricula"));
                 aluno.setNome(rs.getString("nome"));
-                aluno.setEntrada(rs.getInt("entrada"));
+                aluno.setAno(rs.getInt("ano"));
                 alunos.add(aluno);
             }
 
@@ -135,7 +135,7 @@ public class SuperTrunfoJDBC {
      * Busca um aluno especifico pela matricula.
      */
     public static Aluno buscarAluno(String matricula) {
-        String sql = "SELECT matricula, nome, entrada FROM aluno WHERE matricula = ?";
+        String sql = "SELECT matricula, nome, ano FROM aluno WHERE matricula = ?";
 
         try (Connection conn = getConnection();
              PreparedStatement ps = conn.prepareStatement(sql)) {
@@ -147,7 +147,7 @@ public class SuperTrunfoJDBC {
                     Aluno aluno = new Aluno();
                     aluno.setMatricula(rs.getString("matricula"));
                     aluno.setNome(rs.getString("nome"));
-                    aluno.setEntrada(rs.getInt("entrada"));
+                    aluno.setAno(rs.getInt("ano"));
                     return aluno;
                 }
             }
