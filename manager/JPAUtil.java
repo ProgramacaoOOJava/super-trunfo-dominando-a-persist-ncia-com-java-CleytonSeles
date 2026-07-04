@@ -1,12 +1,14 @@
+package manager;
+
 import jakarta.persistence.EntityManagerFactory;
 import jakarta.persistence.Persistence;
 
 /**
- * Centraliza a criacao e o encerramento do EntityManagerFactory.
+ * Centraliza a criacao do EntityManagerFactory da aplicacao Mestre.
  */
 public final class JPAUtil {
 
-    private static final String UNIDADE_PERSISTENCIA = "super-trunfo-pu";
+    private static final String UNIDADE_PERSISTENCIA = "super-trunfo-mestre-pu";
     private static final EntityManagerFactory ENTITY_MANAGER_FACTORY =
         Persistence.createEntityManagerFactory(UNIDADE_PERSISTENCIA);
 
@@ -23,3 +25,4 @@ public final class JPAUtil {
         }
     }
 }
+
